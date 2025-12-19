@@ -56,7 +56,7 @@ fi
 if [ -d "$DOTFILES_DIR/oh-my-zsh/custom/themes" ] && [ "$(ls -A "$DOTFILES_DIR/oh-my-zsh/custom/themes" 2>/dev/null)" ]; then
     echo "Installing custom oh-my-zsh themes..."
     mkdir -p "$HOME/.oh-my-zsh/custom/themes"
-    cp -r "$DOTFILES_DIR/oh-my-zsh/custom/themes/"* "$HOME/.oh-my-zsh/custom/themes/"
+    cp -r "$DOTFILES_DIR/oh-my-zsh/custom/themes/"* "$HOME/.oh-my-zsh/custom/themes/" 2>/dev/null || true
     echo "✓ Custom themes installed"
 fi
 
@@ -64,7 +64,7 @@ fi
 if [ -d "$DOTFILES_DIR/oh-my-zsh/custom/plugins" ] && [ "$(ls -A "$DOTFILES_DIR/oh-my-zsh/custom/plugins" 2>/dev/null)" ]; then
     echo "Installing custom oh-my-zsh plugins..."
     mkdir -p "$HOME/.oh-my-zsh/custom/plugins"
-    cp -r "$DOTFILES_DIR/oh-my-zsh/custom/plugins/"* "$HOME/.oh-my-zsh/custom/plugins/"
+    cp -r "$DOTFILES_DIR/oh-my-zsh/custom/plugins/"* "$HOME/.oh-my-zsh/custom/plugins/" 2>/dev/null || true
     echo "✓ Custom plugins installed"
 fi
 
