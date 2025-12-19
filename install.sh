@@ -24,6 +24,31 @@ fi
 ln -sf "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 echo "✓ Tmux config linked"
 
+# Oh My Zsh
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    echo "✓ Oh My Zsh installed"
+else
+    echo "✓ Oh My Zsh already installed"
+fi
+
+# Copy custom oh-my-zsh themes
+if [ -d "$DOTFILES_DIR/oh-my-zsh/custom/themes" ]; then
+    echo "Installing custom oh-my-zsh themes..."
+    mkdir -p "$HOME/.oh-my-zsh/custom/themes"
+    cp -r "$DOTFILES_DIR/oh-my-zsh/custom/themes/"* "$HOME/.oh-my-zsh/custom/themes/"
+    echo "✓ Custom themes installed"
+fi
+
+# Copy custom oh-my-zsh plugins (if any)
+if [ -d "$DOTFILES_DIR/oh-my-zsh/custom/plugins" ]; then
+    echo "Installing custom oh-my-zsh plugins..."
+    mkdir -p "$HOME/.oh-my-zsh/custom/plugins"
+    cp -r "$DOTFILES_DIR/oh-my-zsh/custom/plugins/"* "$HOME/.oh-my-zsh/custom/plugins/"
+    echo "✓ Custom plugins installed"
+fi
+
 # Zsh
 if [ -e "$HOME/.zshrc" ]; then
     echo "Backing up existing zshrc..."

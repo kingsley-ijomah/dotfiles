@@ -1,10 +1,28 @@
-# Custom prompt - show label and current directory
-PROMPT='G9:%~ ➜ '
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+unsetopt correct_all
 
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+ZSH_THEME="codehance"
+
+ENABLE_CORRECTION="false"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# export EDITOR="code -w"
+# export EDITOR="vim"
 export EDITOR="cursor --wait"
 
-# User-local Homebrew (g9's own installation)
-export PATH="$HOME/homebrew/bin:$PATH"
+# Example aliases
+alias zshrc="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
+alias tmuxconf="vim ~/.tmux.conf"
 
 # Keep all your existing aliases and functions below this line
 
