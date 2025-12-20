@@ -9,6 +9,28 @@ mkdir -p "$backup_dir"
 
 echo "Creating backup at: $backup_dir"
 
+# Detect Homebrew path (same logic as .zshrc but for bash)
+if command -v brew &>/dev/null; then
+    eval "$(brew shellenv)"
+elif [[ -f "$HOME/homebrew/bin/brew" ]]; then
+    eval "$("$HOME/homebrew/bin/brew" shellenv)"
+elif [[ -f "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# Install Homebrew packages from Brewfile
+if command -v brew &> /dev/null && [ -f "$DOTFILES_DIR/Brewfile" ]; then
+    echo "Installing Homebrew packages..."
+    brew bundle --file="$DOTFILES_DIR/Brewfile" || true
+    echo "✓ Homebrew packages installed"
+else
+    echo "⚠ Homebrew not found or no Brewfile, skipping package installation"
+fi
+
 # Neovim
 if [ -e "$HOME/.config/nvim" ] && [ ! -L "$HOME/.config/nvim" ]; then
     echo "Backing up existing nvim config..."
