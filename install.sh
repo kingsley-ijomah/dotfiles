@@ -52,20 +52,30 @@ else
     echo "✓ Oh My Zsh already installed"
 fi
 
-# Copy custom oh-my-zsh themes
+# Symlink custom oh-my-zsh themes
 if [ -d "$DOTFILES_DIR/oh-my-zsh/custom/themes" ] && [ "$(ls -A "$DOTFILES_DIR/oh-my-zsh/custom/themes" 2>/dev/null)" ]; then
-    echo "Installing custom oh-my-zsh themes..."
+    echo "Linking custom oh-my-zsh themes..."
     mkdir -p "$HOME/.oh-my-zsh/custom/themes"
-    cp -r "$DOTFILES_DIR/oh-my-zsh/custom/themes/"* "$HOME/.oh-my-zsh/custom/themes/" 2>/dev/null || true
-    echo "✓ Custom themes installed"
+    for theme in "$DOTFILES_DIR/oh-my-zsh/custom/themes/"*; do
+        [ -e "$theme" ] || continue
+        theme_name=$(basename "$theme")
+        rm -f "$HOME/.oh-my-zsh/custom/themes/$theme_name"
+        ln -sf "$theme" "$HOME/.oh-my-zsh/custom/themes/$theme_name"
+    done
+    echo "✓ Custom themes linked"
 fi
 
-# Copy custom oh-my-zsh plugins (if any)
+# Symlink custom oh-my-zsh plugins (if any)
 if [ -d "$DOTFILES_DIR/oh-my-zsh/custom/plugins" ] && [ "$(ls -A "$DOTFILES_DIR/oh-my-zsh/custom/plugins" 2>/dev/null)" ]; then
-    echo "Installing custom oh-my-zsh plugins..."
+    echo "Linking custom oh-my-zsh plugins..."
     mkdir -p "$HOME/.oh-my-zsh/custom/plugins"
-    cp -r "$DOTFILES_DIR/oh-my-zsh/custom/plugins/"* "$HOME/.oh-my-zsh/custom/plugins/" 2>/dev/null || true
-    echo "✓ Custom plugins installed"
+    for plugin in "$DOTFILES_DIR/oh-my-zsh/custom/plugins/"*; do
+        [ -e "$plugin" ] || continue
+        plugin_name=$(basename "$plugin")
+        rm -rf "$HOME/.oh-my-zsh/custom/plugins/$plugin_name"
+        ln -sf "$plugin" "$HOME/.oh-my-zsh/custom/plugins/$plugin_name"
+    done
+    echo "✓ Custom plugins linked"
 fi
 
 # Zsh
