@@ -12,6 +12,7 @@ dotfiles/
 ├── oh-my-zsh/         # Custom Oh My Zsh themes
 │   └── custom/
 │       └── themes/
+├── iterm2/            # iTerm2 configuration (Dynamic Profiles)
 └── install.sh         # Automated setup script
 ```
 
@@ -45,8 +46,9 @@ source ~/.zshrc
    - `~/.zshrc` → `~/dotfiles/zsh/.zshrc`
 3. **Installs Oh My Zsh** (if not already installed)
 4. **Copies custom themes** to `~/.oh-my-zsh/custom/themes/`
-5. **Installs Neovim plugins** via lazy.nvim
-6. **Installs Tmux plugins** via TPM (Tmux Plugin Manager)
+5. **Links iTerm2 profiles** (macOS only) for Nerd Font support
+6. **Installs Neovim plugins** via lazy.nvim
+7. **Installs Tmux plugins** via TPM (Tmux Plugin Manager)
 
 ## What's Included
 
@@ -71,6 +73,10 @@ source ~/.zshrc
 - **Docker Compose**: dc-up, dc-down, dc-logs, dc-restart, etc.
 - **Tmux helpers**: tm, tmn, tma, tmdev
 
+### iTerm2 (macOS)
+- **Dynamic Profile**: "Dotfiles" with Nerd Font configured
+- **Font**: MesloLGS Nerd Font (for Neovim icons)
+
 ## Requirements
 
 - Neovim 0.9+
@@ -91,4 +97,18 @@ git pull
 ```
 
 The install script is safe to run multiple times - it will update symlinks and reinstall plugins as needed.
+
+## iTerm2 Setup (macOS)
+
+The install script automatically links the Dynamic Profile to iTerm2. The "Dotfiles" profile will appear in your profiles list after running `./install.sh`.
+
+To set it as your default profile:
+
+1. Open iTerm2 > Settings (Cmd+,)
+2. Go to **Profiles**
+3. Select "Dotfiles" from the list
+4. Click "Other Actions..." (bottom left)
+5. Choose "Set as Default"
+
+This configures iTerm2 to use MesloLGS Nerd Font, which displays icons correctly in Neovim.
 

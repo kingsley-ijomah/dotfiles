@@ -1,9 +1,5 @@
-# Homebrew path detection
-# First: check if brew is already in PATH (handles custom/unorthodox locations)
-# Fallback: check common locations
-if command -v brew &>/dev/null; then
-    eval "$(brew shellenv)"
-elif [[ -f "$HOME/homebrew/bin/brew" ]]; then
+# Homebrew path detection - prioritize $HOME/homebrew (no sudo required)
+if [[ -f "$HOME/homebrew/bin/brew" ]]; then
     eval "$("$HOME/homebrew/bin/brew" shellenv)"
 elif [[ -f "/opt/homebrew/bin/brew" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"

@@ -9,10 +9,8 @@ mkdir -p "$backup_dir"
 
 echo "Creating backup at: $backup_dir"
 
-# Detect Homebrew path (same logic as .zshrc but for bash)
-if command -v brew &>/dev/null; then
-    eval "$(brew shellenv)"
-elif [[ -f "$HOME/homebrew/bin/brew" ]]; then
+# Detect Homebrew path - prioritize $HOME/homebrew (no sudo required)
+if [[ -f "$HOME/homebrew/bin/brew" ]]; then
     eval "$("$HOME/homebrew/bin/brew" shellenv)"
 elif [[ -f "/opt/homebrew/bin/brew" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -109,6 +107,50 @@ elif [ -L "$HOME/.zshrc" ]; then
 fi
 ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 echo "✓ Zsh config linked"
+
+# iTerm2 Dynamic Profiles (macOS only)
+if [[ "$OSTYPE" == "darwin"* ]] && [ -d "$DOTFILES_DIR/iterm2/DynamicProfiles" ]; then
+    iterm_profiles_dir="$HOME/Library/Application Support/iTerm2/DynamicProfiles"
+    mkdir -p "$iterm_profiles_dir"
+    for profile in "$DOTFILES_DIR/iterm2/DynamicProfiles/"*.json; do
+        [ -e "$profile" ] || continue
+        profile_name=$(basename "$profile")
+        rm -f "$iterm_profiles_dir/$profile_name"
+        ln -sf "$profile" "$iterm_profiles_dir/$profile_name"
+    done
+
+    # Remove any conflicting stored profile and set dynamic profile as default
+    # This ensures the dynamic profile's font settings take effect
+    if command -v python3 &>/dev/null; then
+        python3 << 'PYTHON_SCRIPT'
+import plistlib
+import os
+import sys
+
+plist_path = os.path.expanduser("~/Library/Preferences/com.googlecode.iterm2.plist")
+dynamic_guid = "dotfiles-nerd-font-20251220"
+
+try:
+    with open(plist_path, "rb") as f:
+        plist = plistlib.load(f)
+
+    # Remove any stored profile with our dynamic GUID (let dynamic profile take over)
+    if "New Bookmarks" in plist:
+        plist["New Bookmarks"] = [p for p in plist["New Bookmarks"] if p.get("Guid") != dynamic_guid]
+
+    # Set our dynamic profile as default
+    plist["Default Bookmark Guid"] = dynamic_guid
+
+    with open(plist_path, "wb") as f:
+        plistlib.dump(plist, f)
+
+    print("  → Cleaned up conflicting iTerm2 profile")
+except Exception as e:
+    print(f"  → Note: Could not update iTerm2 prefs: {e}")
+PYTHON_SCRIPT
+    fi
+    echo "✓ iTerm2 profiles linked"
+fi
 
 # Install Neovim plugins (only if nvim is available)
 if command -v nvim &> /dev/null; then

@@ -69,6 +69,23 @@ end, { desc = "Toggle Claude Code (history)" })
 -- Double escape to exit terminal mode (for toggling Claude off)
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
+-- Terminal scrolling keymaps (work in terminal mode)
+vim.keymap.set("t", "<C-u>", "<C-\\><C-n><C-u>", { desc = "Scroll up (half page)" })
+vim.keymap.set("t", "<C-d>", "<C-\\><C-n><C-d>", { desc = "Scroll down (half page)" })
+vim.keymap.set("t", "<C-b>", "<C-\\><C-n><C-b>", { desc = "Scroll up (full page)" })
+vim.keymap.set("t", "<C-f>", "<C-\\><C-n><C-f>", { desc = "Scroll down (full page)" })
+
+-- Mouse scroll in terminal mode - use function for reliable handling
+vim.keymap.set("t", "<ScrollWheelUp>", function()
+  local keys = vim.api.nvim_replace_termcodes("<C-\\><C-n>5k", true, false, true)
+  vim.api.nvim_feedkeys(keys, "n", false)
+end, { desc = "Mouse scroll up" })
+
+vim.keymap.set("t", "<ScrollWheelDown>", function()
+  local keys = vim.api.nvim_replace_termcodes("<C-\\><C-n>5j", true, false, true)
+  vim.api.nvim_feedkeys(keys, "n", false)
+end, { desc = "Mouse scroll down" })
+
 return {
   "coder/claudecode.nvim",
   dependencies = { "folke/snacks.nvim" },
