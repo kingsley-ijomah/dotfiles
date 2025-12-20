@@ -1,3 +1,16 @@
+# Homebrew path detection
+# First: check if brew is already in PATH (handles custom/unorthodox locations)
+# Fallback: check common locations
+if command -v brew &>/dev/null; then
+    eval "$(brew shellenv)"
+elif [[ -f "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 unsetopt correct_all
