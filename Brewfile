@@ -1,9 +1,6 @@
 # Homebrew Bundle - https://github.com/Homebrew/homebrew-bundle
 # Install: brew bundle --file=~/dotfiles/Brewfile
 
-# Taps
-tap "homebrew/cask-fonts"
-
 # ======================
 # Core Tools
 # ======================
