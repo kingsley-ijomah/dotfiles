@@ -91,3 +91,4 @@ git pull
 ```
 
 The install script is safe to run multiple times - it will update symlinks and reinstall plugins as needed.
+
