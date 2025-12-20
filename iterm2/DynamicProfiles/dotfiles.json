@@ -4,7 +4,8 @@
       "Use Separate Colors for Light and Dark Mode" : false,
       "Rewritable" : true,
       "Name" : "Dotfiles",
-      "Guid" : "dotfiles-nerd-font-20251220"
+      "Guid" : "dotfiles-nerd-font-20251220",
+      "Normal Font" : "JetBrainsMonoNLNerdFontMono-Regular 18"
     }
   ]
 }
