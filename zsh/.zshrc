@@ -34,7 +34,7 @@ export EDITOR="cursor --wait"
 alias zshrc="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias tmuxconf="vim ~/.tmux.conf"
-
+alias pip=pip3
 # Keep all your existing aliases and functions below this line
 
 # ===============================================
@@ -300,7 +300,6 @@ alias es-create-index='function _escreateindex(){ curl -X PUT "localhost:9200/$1
 
 alias phonecast='~/phonecast.sh'
 alias python=python3
-alias pip=pip3
 
 # Docker aliases
 dc-up() {
