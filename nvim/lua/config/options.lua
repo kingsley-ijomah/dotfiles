@@ -92,3 +92,10 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "FocusLost", "BufLea
     end
   end,
 })
+
+-- Folding with Treesitter
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldlevel = 99  -- Start with all folds open
+opt.foldlevelstart = 99
+opt.foldenable = true

@@ -106,3 +106,10 @@ keymap("n", "<leader><leader>", function()
     print("Sourced " .. vim.fn.expand("%"))
   end
 end, { desc = "Source file" })
+
+-- Folding
+keymap("n", "<leader>zc", "zc", { desc = "Close fold" })
+keymap("n", "<leader>zo", "zo", { desc = "Open fold" })
+keymap("n", "<leader>za", "za", { desc = "Toggle fold" })
+keymap("n", "<leader>zM", "zM", { desc = "Close all folds" })
+keymap("n", "<leader>zR", "zR", { desc = "Open all folds" })
